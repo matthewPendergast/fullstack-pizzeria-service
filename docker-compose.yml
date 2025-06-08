@@ -1,0 +1,36 @@
+services:
+    db:
+        image: postgres:15
+        container_name: pizza-postgres
+        restart: always
+        env_file:
+            - .env
+        ports:
+            - "5432:5432"
+        volumes:
+            - pgdata:/var/lib/postgresql/data
+            - ./api/db/init:/docker-entrypoint-initdb.d
+
+    api:
+        build: ./api
+        container_name: pizza-api
+        restart: always
+        env_file:
+            - .env
+        ports:
+            - "5000:5000"
+        depends_on:
+            - db
+
+    client:
+        build: ./client
+        container_name: pizza-client
+        env_file:
+            - .env
+        ports:
+            - "5173:5173"
+        depends_on:
+            - api
+
+volumes:
+    pgdata:

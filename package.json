@@ -1,0 +1,22 @@
+{
+	"name": "pizza-store",
+	"version": "1.0.0",
+	"private": true,
+	"description": "Full-stack pizza app project",
+	"scripts": {
+		"install-all": "npm install && npm install --prefix api && npm install --prefix client",
+		"dev": "./scripts/start.sh",
+		"dev:api": "npm run dev --prefix api",
+		"dev:client": "npm run dev --prefix client",
+		"format": "prettier --write ."
+	},
+	"keywords": [],
+	"author": "Matthew Pendergast",
+	"license": "MIT",
+	"devDependencies": {
+		"cross-env": "^7.0.3",
+		"dotenv-cli": "^8.0.0",
+		"prettier": "^3.5.3",
+		"prettier-plugin-tailwindcss": "^0.6.12"
+	}
+}
