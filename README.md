@@ -23,10 +23,9 @@ A full-stack pizza ordering web app being built with React, Node, Express, and P
 
 ### MVP Phase:
 
-- ⬜ Design database schema and populate with test seed data
-- ⬜ Menu functionality
-    - ⬜ Backend: API route for menu retrieval
-    - ⬜ Testing: Unit & integration tests
+- 🔄 Menu functionality
+    - ✅ Backend: API route for menu retrieval
+    - ✅ Testing: Unit & integration tests
     - ⬜ Frontend: Menu page UI
 - ⬜ Cart functionality
     - ⬜ Backend: API routes (add/update/remove/view items)
@@ -50,14 +49,15 @@ pizza-store/
 ├── api/
 │   ├── __tests__/
 │   ├── db/init/
-│   ├── src/
-│   │   ├── config/
-│   │   ├── controllers/
-│   │   ├── middlewares/
-│   │   ├── models/
-│   │   ├── routes/
-│   │   ├── app.ts
-│   │   └── index.ts
+│   └── src/
+│       ├── config/
+│       ├── controllers/
+│       ├── middlewares/
+│       ├── models/
+│       ├── routes/
+│       ├── app.ts
+│       └── index.ts
+│
 ├── client/
 │   ├── public/
 │   ├── src/
@@ -68,6 +68,39 @@ pizza-store/
 │   │   ├── App.tsx
 │   │   └── main.tsx
 │   └── index.html
-├── scripts/
-└── README.md
+│
+└── scripts/
 ```
+
+## API Documentation
+
+### Menu
+
+- **GET** `/menu`
+
+    Returns a list of all available menu items.
+
+    **Response:**
+
+    ```json
+    [
+    	{
+    		"id": 1,
+    		"name": "Cheese Pizza",
+    		"description": "Three-cheese blend of mozzarella, provolone, and parmesan.",
+    		"price": "8.99",
+    		"category": "pizza",
+    		"image_url": null,
+    		"created_at": "2025-06-09T05:55:02.997Z"
+    	},
+    	{
+    		"id": 2,
+    		"name": "Pepperoni Pizza",
+    		"description": "Crisp pepperoni, mozzarella, provolone, and parmesan.",
+    		"price": "9.99",
+    		"category": "pizza",
+    		"image_url": null,
+    		"created_at": "2025-06-09T05:55:02.997Z"
+    	}
+    ]
+    ```
