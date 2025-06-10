@@ -3,12 +3,12 @@ import app from "../../src/app";
 
 describe("GET /menu", () => {
 	it("should return a 200 status", async () => {
-		const response = await request(app).get("/menu");
+		const response = await request(app).get("/api/menu");
 		expect(response.status).toBe(200);
 	});
 
 	it("should return an array of menu items", async () => {
-		const response = await request(app).get("/menu");
+		const response = await request(app).get("/api/menu");
 		expect(Array.isArray(response.body)).toBe(true);
 		expect(response.body.length).toBeGreaterThan(0);
 
