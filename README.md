@@ -10,7 +10,7 @@ A full-stack pizza ordering web app being built with React, Node, Express, and P
 - **DevOps:** Docker
 - **Testing:** Jest
 
-## MVP Features
+## MVP Features (in progress)
 
 - View restaurant menu
 - Add/remove items from cart (with anonymous user support)
@@ -23,10 +23,10 @@ A full-stack pizza ordering web app being built with React, Node, Express, and P
 
 ### MVP Phase:
 
-- 🔄 Menu functionality
+- ✅ Menu functionality
     - ✅ Backend: API route for menu retrieval
-    - ✅ Testing: Unit & integration tests
-    - ⬜ Frontend: Menu page UI
+    - ✅ Testing: Integration tests
+    - ✅ Frontend: Menu page UI
 - ⬜ Cart functionality
     - ⬜ Backend: API routes (add/update/remove/view items)
     - ⬜ Testing: Unit & integration tests
@@ -76,7 +76,7 @@ pizza-store/
 
 ### Menu
 
-- **GET** `/menu`
+- **GET** `/api/menu`
 
     Returns a list of all available menu items.
 
