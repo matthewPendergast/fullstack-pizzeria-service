@@ -27,14 +27,14 @@ A full-stack pizza ordering web app being built with React, Node, Express, and P
     - ✅ Backend: API route for menu retrieval
     - ✅ Testing: Integration tests
     - ✅ Frontend: Menu page UI
+- 🔄 User authentication
+    - ✅ Backend: Signup/login API routes
+    - ✅ Testing: Auth route tests
+    - ⬜ Frontend: Signup/login pages
 - ⬜ Cart functionality
     - ⬜ Backend: API routes (add/update/remove/view items)
     - ⬜ Testing: Unit & integration tests
     - ⬜ Frontend: Interactive cart UI
-- ⬜ User authentication
-    - ⬜ Backend: Signup/login API routes
-    - ⬜ Testing: Auth route tests
-    - ⬜ Frontend: Signup/Login pages
 - ⬜ Checkout & order placement
     - ⬜ Backend: Checkout/order process
     - ⬜ Testing: Order route tests
@@ -55,6 +55,7 @@ pizza-store/
 │       ├── middlewares/
 │       ├── models/
 │       ├── routes/
+│       ├── utils/
 │       ├── app.ts
 │       └── index.ts
 │
@@ -103,4 +104,51 @@ pizza-store/
     		"created_at": "2025-06-09T05:55:02.997Z"
     	}
     ]
+    ```
+
+### Authentication
+
+- **POST** `/api/auth/signup`
+
+    Creates a new user account.
+
+    **Request:**
+
+    ```json
+    {
+    	"username": "john_doe",
+    	"email": "john_doe@example.com",
+    	"password": "securePassword123"
+    }
+    ```
+
+    **Response:**
+
+    ```json
+    {
+    	"id": 1,
+    	"username": "john_doe"
+    }
+    ```
+
+- **POST** `/api/auth/login`
+
+    Logs in an existing user.
+
+    **Request:**
+
+    ```json
+    {
+    	"email": "john_doe@example.com",
+    	"password": "securePassword123"
+    }
+    ```
+
+    **Response:**
+
+    ```json
+    {
+    	"id": 1,
+    	"username": "john_doe"
+    }
     ```

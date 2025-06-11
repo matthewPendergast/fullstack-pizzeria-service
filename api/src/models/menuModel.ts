@@ -10,7 +10,7 @@ export interface MenuItem {
 	created_at: Date;
 }
 
-export const getAllMenuItems = async () => {
+export const getAllMenuItems = async (): Promise<MenuItem[]> => {
 	try {
 		const result = await pool.query("SELECT * FROM menu_items ORDER BY id");
 		return result.rows;
