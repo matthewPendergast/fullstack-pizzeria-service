@@ -39,6 +39,7 @@ A full-stack pizza ordering web app being built with React, Node, Express, and P
     - ⬜ Backend: Checkout/order process
     - ⬜ Testing: Order route tests
     - ⬜ Frontend: Checkout & order confirmation UI
+- ⬜ UI/UX
 - ⬜ Assess, refine, optimize, & polish
 - ⬜ Deployment
 
@@ -77,78 +78,196 @@ pizza-store/
 
 ### Menu
 
-- **GET** `/api/menu`
+<details>
+	<summary>
+		<b>GET</b>
+		<code>/api/menu</code>
+		(Returns a list of all available menu items)
+	</summary>
 
-    Returns a list of all available menu items.
+#### Parameters
 
-    **Response:**
+> None
 
-    ```json
-    [
-    	{
-    		"id": 1,
-    		"name": "Cheese Pizza",
-    		"description": "Three-cheese blend of mozzarella, provolone, and parmesan.",
-    		"price": "8.99",
-    		"category": "pizza",
-    		"image_url": null,
-    		"created_at": "2025-06-09T05:55:02.997Z"
-    	},
-    	{
-    		"id": 2,
-    		"name": "Pepperoni Pizza",
-    		"description": "Crisp pepperoni, mozzarella, provolone, and parmesan.",
-    		"price": "9.99",
-    		"category": "pizza",
-    		"image_url": null,
-    		"created_at": "2025-06-09T05:55:02.997Z"
-    	}
-    ]
-    ```
+#### Headers
+
+> None
+
+#### Responses
+
+> | HTTP Code | Content-Type       | Response                      |
+> | --------- | ------------------ | ----------------------------- |
+> | `200`     | `application/json` | Array of menu items           |
+> | `200`     | `application/json` | Failed to retrieve menu items |
+
+#### Example Response
+
+```json
+[
+	{
+		"id": 1,
+		"name": "Cheese Pizza",
+		"description": "Three-cheese blend of mozzarella, provolone, and parmesan.",
+		"price": "8.99",
+		"category": "pizza",
+		"image_url": null,
+		"created_at": "2025-06-09T05:55:02.997Z"
+	},
+	{
+		"id": 2,
+		"name": "Pepperoni Pizza",
+		"description": "Crisp pepperoni, mozzarella, provolone, and parmesan.",
+		"price": "9.99",
+		"category": "pizza",
+		"image_url": null,
+		"created_at": "2025-06-09T05:55:02.997Z"
+	}
+]
+```
+
+---
+
+</details>
 
 ### Authentication
 
-- **POST** `/api/auth/signup`
+<details>
+	<summary>
+		<b>POST</b>
+		<code>/api/auth/signup</code>
+		(Creates a new user account)
+	</summary>
 
-    Creates a new user account.
+#### Parameters
 
-    **Request:**
+> | Name     | Type     | Data Type | Description              |
+> | -------- | -------- | --------- | ------------------------ |
+> | username | required | string    | Desired username         |
+> | email    | required | string    | Email for the account    |
+> | password | required | string    | Password for the account |
 
-    ```json
-    {
-    	"username": "john_doe",
-    	"email": "john_doe@example.com",
-    	"password": "securePassword123"
-    }
-    ```
+#### Headers
 
-    **Response:**
+> | Name         | Value            | Required | Description            |
+> | ------------ | ---------------- | -------- | ---------------------- |
+> | Content-Type | application/json | Yes      | Must be JSON formatted |
 
-    ```json
-    {
-    	"id": 1,
-    	"username": "john_doe"
-    }
-    ```
+#### Responses
 
-- **POST** `/api/auth/login`
+> | HTTP Code | Content-Type       | Response        |
+> | --------- | ------------------ | --------------- |
+> | `201`     | `application/json` | id and username |
+> | `400`     | `application/json` | Missing fields  |
+> | `500`     | `application/json` | Signup failed   |
 
-    Logs in an existing user.
+#### Example Request
 
-    **Request:**
+```json
+{
+	"username": "john_doe",
+	"email": "john_doe@example.com",
+	"password": "securePassword123"
+}
+```
 
-    ```json
-    {
-    	"email": "john_doe@example.com",
-    	"password": "securePassword123"
-    }
-    ```
+#### Example Response
 
-    **Response:**
+```json
+{
+	"id": 1,
+	"username": "john_doe"
+}
+```
 
-    ```json
-    {
-    	"id": 1,
-    	"username": "john_doe"
-    }
-    ```
+---
+
+</details>
+
+<details>
+	<summary>
+		<b>POST</b>
+		<code>/api/auth/login</code>
+		(Logs in an existing user)
+	</summary>
+
+#### Parameters
+
+> | Name     | Type     | Data Type | Description         |
+> | -------- | -------- | --------- | ------------------- |
+> | email    | required | string    | Registered email    |
+> | password | required | string    | Associated password |
+
+#### Headers
+
+> | Name         | Value            | Required | Description            |
+> | ------------ | ---------------- | -------- | ---------------------- |
+> | Content-Type | application/json | Yes      | Must be JSON formatted |
+
+#### Responses
+
+> | HTTP Code | Content-Type       | Response            |
+> | --------- | ------------------ | ------------------- |
+> | `200`     | `application/json` | id and username     |
+> | `400`     | `application/json` | Missing credentials |
+> | `401`     | `application/json` | Invalid credentials |
+> | `500`     | `application/json` | Login failed        |
+
+#### Example Request
+
+```json
+{
+	"email": "john_doe@example.com",
+	"password": "securePassword123"
+}
+```
+
+#### Example Response
+
+```json
+{
+	"id": 1,
+	"username": "john_doe"
+}
+```
+
+---
+
+</details>
+
+### Health
+
+<details>
+	<summary>
+		<b>GET</b>
+		<code>/api/health</code>
+		(Returns basic server health info)
+	</summary>
+
+#### Parameters
+
+> None
+
+#### Headers
+
+> None
+
+#### Responses
+
+> | HTTP Code | Content-Type       | Response                         |
+> | --------- | ------------------ | -------------------------------- |
+> | `200`     | `application/json` | Health status and server metrics |
+> | `500`     | `application/json` | Unexpected internal error        |
+
+#### Example Response
+
+```json
+{
+	"status": "ok",
+	"timestamp": 1718149634291,
+	"uptime": 5234.1991027
+}
+```
+
+---
+
+</details>
