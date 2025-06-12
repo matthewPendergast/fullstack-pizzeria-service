@@ -64,3 +64,9 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 		res.status(500).json({ error: "Login failed." });
 	}
 };
+
+export const getCurrentUser = (req: Request, res: Response): void => {
+	// Exclude iat/exp timestamps from response
+	const { iat, exp, ...userData } = (req as any).user;
+	res.status(200).json(userData);
+};

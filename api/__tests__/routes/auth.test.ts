@@ -51,4 +51,22 @@ describe("POST /signup and /login", () => {
 		});
 		expect(res.status).toBe(401);
 	});
+
+	it("should return the current user with valid cookie", async () => {
+		const loginRes = await request(app).post("/api/auth/login").send({
+			email: testUser.email,
+			password: testUser.password,
+		});
+
+		const cookie = loginRes.headers["set-cookie"];
+		expect(cookie).toBeDefined();
+
+		const meRes = await request(app)
+			.get("/api/auth/me")
+			.set("Cookie", cookie);
+
+		expect(meRes.status).toBe(200);
+		expect(meRes.body).toHaveProperty("id");
+		expect(meRes.body).toHaveProperty("username", testUser.username);
+	});
 });

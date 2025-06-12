@@ -43,37 +43,6 @@ A full-stack pizza ordering web app being built with React, Node, Express, and P
 - ⬜ Assess, refine, optimize, & polish
 - ⬜ Deployment
 
-## Project Structure
-
-```bash
-pizza-store/
-├── api/
-│   ├── __tests__/
-│   ├── db/init/
-│   └── src/
-│       ├── config/
-│       ├── controllers/
-│       ├── middlewares/
-│       ├── models/
-│       ├── routes/
-│       ├── utils/
-│       ├── app.ts
-│       └── index.ts
-│
-├── client/
-│   ├── public/
-│   ├── src/
-│   │   ├── assets/
-│   │   ├── components/
-│   │   ├── context/
-│   │   ├── pages/
-│   │   ├── App.tsx
-│   │   └── main.tsx
-│   └── index.html
-│
-└── scripts/
-```
-
 ## API Documentation
 
 ### Menu
@@ -98,32 +67,32 @@ pizza-store/
 > | HTTP Code | Content-Type       | Response                      |
 > | --------- | ------------------ | ----------------------------- |
 > | `200`     | `application/json` | Array of menu items           |
-> | `200`     | `application/json` | Failed to retrieve menu items |
+> | `500`     | `application/json` | Failed to retrieve menu items |
 
 #### Example Response
 
-```json
-[
-	{
-		"id": 1,
-		"name": "Cheese Pizza",
-		"description": "Three-cheese blend of mozzarella, provolone, and parmesan.",
-		"price": "8.99",
-		"category": "pizza",
-		"image_url": null,
-		"created_at": "2025-06-09T05:55:02.997Z"
-	},
-	{
-		"id": 2,
-		"name": "Pepperoni Pizza",
-		"description": "Crisp pepperoni, mozzarella, provolone, and parmesan.",
-		"price": "9.99",
-		"category": "pizza",
-		"image_url": null,
-		"created_at": "2025-06-09T05:55:02.997Z"
-	}
-]
-```
+> ```json
+> [
+> 	{
+> 		"id": 1,
+> 		"name": "Cheese Pizza",
+> 		"description": "Three-cheese blend of mozzarella, provolone, and parmesan.",
+> 		"price": "8.99",
+> 		"category": "pizza",
+> 		"image_url": null,
+> 		"created_at": "2025-06-09T05:55:02.997Z"
+> 	},
+> 	{
+> 		"id": 2,
+> 		"name": "Pepperoni Pizza",
+> 		"description": "Crisp pepperoni, mozzarella, provolone, and parmesan.",
+> 		"price": "9.99",
+> 		"category": "pizza",
+> 		"image_url": null,
+> 		"created_at": "2025-06-09T05:55:02.997Z"
+> 	}
+> ]
+> ```
 
 ---
 
@@ -162,22 +131,22 @@ pizza-store/
 
 #### Example Request
 
-```json
-{
-	"username": "john_doe",
-	"email": "john_doe@example.com",
-	"password": "securePassword123"
-}
-```
+> ```json
+> {
+> 	"username": "john_doe",
+> 	"email": "john_doe@example.com",
+> 	"password": "securePassword123"
+> }
+> ```
 
 #### Example Response
 
-```json
-{
-	"id": 1,
-	"username": "john_doe"
-}
-```
+> ```json
+> {
+> 	"id": 1,
+> 	"username": "john_doe"
+> }
+> ```
 
 ---
 
@@ -214,21 +183,58 @@ pizza-store/
 
 #### Example Request
 
-```json
-{
-	"email": "john_doe@example.com",
-	"password": "securePassword123"
-}
-```
+> ```json
+> {
+> 	"email": "john_doe@example.com",
+> 	"password": "securePassword123"
+> }
+> ```
 
 #### Example Response
 
-```json
-{
-	"id": 1,
-	"username": "john_doe"
-}
-```
+> ```json
+> {
+> 	"id": 1,
+> 	"username": "john_doe"
+> }
+> ```
+
+---
+
+</details>
+
+<details>
+	<summary>
+		<b>GET</b>
+		<code>/api/auth/me</code>
+		(Returns basic authenticated user info)
+	</summary>
+
+#### Parameters
+
+> None
+
+#### Headers
+
+> | Name   | Value                | Required | Description                           |
+> | ------ | -------------------- | -------- | ------------------------------------- |
+> | Cookie | token=JWT_TOKEN_HERE | Yes      | Must contain a valid token from login |
+
+#### Responses
+
+> | HTTP Code | Content-Type       | Response        |
+> | --------- | ------------------ | --------------- |
+> | `200`     | `application/json` | id and username |
+> | `401`     | `application/json` | Unauthorized    |
+
+#### Example Response
+
+> ```json
+> {
+> 	"id": 1,
+> 	"username": "john_doe"
+> }
+> ```
 
 ---
 
@@ -260,14 +266,45 @@ pizza-store/
 
 #### Example Response
 
-```json
-{
-	"status": "ok",
-	"timestamp": 1718149634291,
-	"uptime": 5234.1991027
-}
-```
+> ```json
+> {
+> 	"status": "ok",
+> 	"timestamp": 1718149634291,
+> 	"uptime": 5234.1991027
+> }
+> ```
 
 ---
 
 </details>
+
+## Project Structure
+
+> ```bash
+> pizza-store/
+> ├── api/
+> │   ├── __tests__/
+> │   ├── db/init/
+> │   └── src/
+> │       ├── config/
+> │       ├── controllers/
+> │       ├── middlewares/
+> │       ├── models/
+> │       ├── routes/
+> │       ├── utils/
+> │       ├── app.ts
+> │       └── index.ts
+> │
+> ├── client/
+> │   ├── public/
+> │   ├── src/
+> │   │   ├── assets/
+> │   │   ├── components/
+> │   │   ├── context/
+> │   │   ├── pages/
+> │   │   ├── App.tsx
+> │   │   └── main.tsx
+> │   └── index.html
+> │
+> └── scripts/
+> ```
