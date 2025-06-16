@@ -30,7 +30,7 @@ A full-stack pizza ordering web app being built with React, Node, Express, and P
 - 🔄 User authentication
     - ✅ Backend: Signup/login API routes
     - ✅ Testing: Auth route tests
-    - ⬜ Frontend: Signup/login pages
+    - 🔄 Frontend: Signup/login pages
 - ⬜ Cart functionality
     - ⬜ Backend: API routes (add/update/remove/view items)
     - ⬜ Testing: Unit & integration tests
@@ -216,9 +216,9 @@ A full-stack pizza ordering web app being built with React, Node, Express, and P
 
 #### Headers
 
-> | Name   | Value                | Required | Description                           |
-> | ------ | -------------------- | -------- | ------------------------------------- |
-> | Cookie | token=JWT_TOKEN_HERE | Yes      | Must contain a valid token from login |
+> | Name   | Value           | Required | Description                           |
+> | ------ | --------------- | -------- | ------------------------------------- |
+> | Cookie | token=JWT_TOKEN | Yes      | Must contain a valid token from login |
 
 #### Responses
 
