@@ -1,8 +1,8 @@
 import { Routes, Route } from "react-router-dom";
-import MenuPage from "./pages/MenuPage";
-import Navbar from "./components/Navbar";
-import SignupPage from "./pages/SignupPage";
-import LoginPage from "./pages/LoginPage";
+import MenuPage from "./pages/menu/MenuPage.tsx";
+import Navbar from "./components/Navbar.tsx";
+import SignupPage from "./pages/auth/SignupPage.tsx";
+import LoginPage from "./pages/auth/LoginPage.tsx";
 import "./App.css";
 
 function App() {
