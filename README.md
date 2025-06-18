@@ -13,9 +13,9 @@ A full-stack pizza ordering web app being built with React, Node, Express, and P
 ## MVP Features (in progress)
 
 - View restaurant menu
-- Add/remove items from cart (with anonymous user support)
-- Mock checkout with fake order confirmation page
 - User signup/login functionality
+- Add/remove items from cart
+- Mock checkout with fake order confirmation page
 - Backend stores order info for logged-in users
 - Responsive UI inspired by real-world applications
 
@@ -27,10 +27,10 @@ A full-stack pizza ordering web app being built with React, Node, Express, and P
     - ✅ Backend: API route for menu retrieval
     - ✅ Testing: Integration tests
     - ✅ Frontend: Menu page UI
-- 🔄 User authentication
+- ✅ User authentication
     - ✅ Backend: Signup/login API routes
     - ✅ Testing: Auth route tests
-    - 🔄 Frontend: Signup/login pages
+    - ✅ Frontend: Signup/login pages
 - ⬜ Cart functionality
     - ⬜ Backend: API routes (add/update/remove/view items)
     - ⬜ Testing: Unit & integration tests
@@ -205,6 +205,35 @@ A full-stack pizza ordering web app being built with React, Node, Express, and P
 
 <details>
 	<summary>
+		<b>POST</b>
+		<code>/api/auth/logout</code>
+		(Logs out the current user)
+	</summary>
+
+#### Parameters
+
+> None
+
+#### Headers
+
+> | Name   | Value           | Required | Description                           |
+> | ------ | --------------- | -------- | ------------------------------------- |
+> | Cookie | token=JWT_TOKEN | Yes      | Must contain a valid token from login |
+
+#### Responses
+
+> | HTTP Code | Content-Type       | Response      |
+> | --------- | ------------------ | ------------- |
+> | `200`     | `application/json` | Logged out    |
+> | `401`     | `application/json` | Unauthorized  |
+> | `500`     | `application/json` | Logout failed |
+
+---
+
+</details>
+
+<details>
+	<summary>
 		<b>GET</b>
 		<code>/api/auth/me</code>
 		(Returns basic authenticated user info)
@@ -298,6 +327,7 @@ A full-stack pizza ordering web app being built with React, Node, Express, and P
 > ├── client/
 > │   ├── public/
 > │   ├── src/
+> │   │   ├── __tests__/
 > │   │   ├── assets/
 > │   │   ├── components/
 > │   │   ├── context/

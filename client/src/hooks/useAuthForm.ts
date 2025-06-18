@@ -1,8 +1,13 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext.tsx";
 
 export const useAuthForm = (endpoint: string) => {
 	const [form, setForm] = useState({ username: "", email: "", password: "" });
-	const [message, setMessage] = useState("");
+	const [successMessage, setSuccessMessage] = useState("");
+	const [errorMessage, setErrorMessage] = useState("");
+	const navigate = useNavigate();
+	const { setUser } = useAuth();
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setForm((prev) => ({
@@ -13,7 +18,8 @@ export const useAuthForm = (endpoint: string) => {
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		setMessage("");
+		setSuccessMessage("");
+		setErrorMessage("");
 
 		try {
 			const res = await fetch(endpoint, {
@@ -26,11 +32,13 @@ export const useAuthForm = (endpoint: string) => {
 			const data = await res.json();
 			if (!res.ok) throw new Error(data.error || "Request failed");
 
-			setMessage("Success!");
+			setUser(data);
+			setSuccessMessage("Success!");
+			setTimeout(() => navigate("/"), 1000);
 		} catch (err: any) {
-			setMessage(err.message);
+			setErrorMessage(err.message);
 		}
 	};
 
-	return { handleChange, handleSubmit, message };
+	return { handleChange, handleSubmit, successMessage, errorMessage };
 };

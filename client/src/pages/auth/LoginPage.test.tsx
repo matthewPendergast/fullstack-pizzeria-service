@@ -1,27 +1,16 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { screen, fireEvent, waitFor } from "@testing-library/react";
 import LoginPage from "./LoginPage.tsx";
-import { MemoryRouter } from "react-router-dom";
-
-const mockedFetch = jest.fn();
-
-beforeEach(() => {
-	globalThis.fetch = mockedFetch;
-});
+import { renderWithWrapper } from "../../__tests__/test-utils.tsx";
 
 describe("LoginPage", () => {
-	it("should render login form inputs", () => {
-		render(<LoginPage />, { wrapper: MemoryRouter });
+	it("should render login form inputs", async () => {
+		await renderWithWrapper(<LoginPage />);
 		expect(screen.getByPlaceholderText(/email/i)).toBeInTheDocument();
 		expect(screen.getByPlaceholderText(/password/i)).toBeInTheDocument();
 	});
 
 	it("should display error message on failed login", async () => {
-		mockedFetch.mockResolvedValueOnce({
-			ok: false,
-			json: async () => ({ error: "Invalid credentials" }),
-		});
-
-		render(<LoginPage />, { wrapper: MemoryRouter });
+		await renderWithWrapper(<LoginPage />);
 
 		fireEvent.change(screen.getByPlaceholderText(/email/i), {
 			target: { value: "fail@example.com" },

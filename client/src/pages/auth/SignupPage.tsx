@@ -1,7 +1,7 @@
 import { useAuthForm } from "../../hooks/useAuthForm.ts";
 
 const SignupPage = () => {
-	const { handleChange, handleSubmit, message } =
+	const { handleChange, handleSubmit, successMessage, errorMessage } =
 		useAuthForm("/api/auth/signup");
 
 	return (
@@ -32,7 +32,12 @@ const SignupPage = () => {
 					Sign Up
 				</button>
 			</form>
-			{message && <p className="mt-2 text-red-500">{message}</p>}
+			{successMessage && (
+				<p className="mt-2 text-green-600">{successMessage}</p>
+			)}
+			{errorMessage && (
+				<p className="mt-2 text-red-500">{errorMessage}</p>
+			)}
 		</div>
 	);
 };
