@@ -2,6 +2,11 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
+const target =
+	process.env.USE_DOCKER === "true"
+		? "http://api:5000"
+		: "http://localhost:5000";
+
 // https://vite.dev/config/
 export default defineConfig({
 	plugins: [react(), tailwindcss()],
@@ -10,7 +15,7 @@ export default defineConfig({
 		port: 5173,
 		proxy: {
 			"/api": {
-				target: "http://localhost:5000",
+				target,
 				changeOrigin: true,
 			},
 		},
