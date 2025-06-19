@@ -1,0 +1,164 @@
+openapi: 3.0.3
+info:
+    title: Pizza Store API
+    version: 1.0.0
+    description: |
+        API documentation for the Pizza Store application, including authentication,
+        menu retrieval, and health checks.
+
+paths:
+    /api/menu:
+        get:
+            summary: Returns a list of all available menu items
+            responses:
+                "200":
+                    description: Array of menu items
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/MenuItem"
+                "500":
+                    description: Failed to retrieve menu items
+
+    /api/auth/signup:
+        post:
+            summary: Creates a new user account
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/SignupRequest"
+            responses:
+                "201":
+                    description: User created successfully
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserResponse"
+                "400":
+                    description: Missing fields
+                "500":
+                    description: Signup failed
+
+    /api/auth/login:
+        post:
+            summary: Logs in an existing user
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/LoginRequest"
+            responses:
+                "200":
+                    description: Login successful
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserResponse"
+                "400":
+                    description: Missing credentials
+                "401":
+                    description: Invalid credentials
+                "500":
+                    description: Login failed
+
+    /api/auth/logout:
+        post:
+            summary: Logs out the current user
+            responses:
+                "200":
+                    description: Logged out
+                "401":
+                    description: Unauthorized
+                "500":
+                    description: Logout failed
+
+    /api/auth/me:
+        get:
+            summary: Returns basic authenticated user info
+            responses:
+                "200":
+                    description: Authenticated user info
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserResponse"
+                "401":
+                    description: Unauthorized
+
+    /api/health:
+        get:
+            summary: Returns basic server health info
+            responses:
+                "200":
+                    description: Server status
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/HealthResponse"
+                "500":
+                    description: Unexpected internal error
+
+components:
+    schemas:
+        MenuItem:
+            type: object
+            properties:
+                id:
+                    type: integer
+                name:
+                    type: string
+                description:
+                    type: string
+                price:
+                    type: string
+                category:
+                    type: string
+                image_url:
+                    type: string
+                    nullable: true
+                created_at:
+                    type: string
+                    format: date-time
+
+        SignupRequest:
+            type: object
+            required: [username, email, password]
+            properties:
+                username:
+                    type: string
+                email:
+                    type: string
+                password:
+                    type: string
+
+        LoginRequest:
+            type: object
+            required: [email, password]
+            properties:
+                email:
+                    type: string
+                password:
+                    type: string
+
+        UserResponse:
+            type: object
+            properties:
+                id:
+                    type: integer
+                username:
+                    type: string
+
+        HealthResponse:
+            type: object
+            properties:
+                status:
+                    type: string
+                timestamp:
+                    type: integer
+                uptime:
+                    type: number
