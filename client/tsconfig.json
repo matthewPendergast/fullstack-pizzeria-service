@@ -2,8 +2,6 @@
 	"extends": "./tsconfig.base.json",
 	"compilerOptions": {
 		"types": ["node", "jest", "@testing-library/jest-dom"],
-		"module": "CommonJS",
-		"moduleResolution": "node",
 		"isolatedModules": false
 	},
 	"include": ["src", "jest.config.ts", "setupTests.ts"]
