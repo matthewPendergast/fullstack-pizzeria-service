@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useCart } from "../../hooks/useCart.ts";
 
 interface MenuItem {
 	id: number;
@@ -14,6 +15,7 @@ const MenuPage = () => {
 	const [menu, setMenu] = useState<MenuItem[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
+	const { addItem } = useCart();
 
 	useEffect(() => {
 		const fetchMenu = async () => {
@@ -36,7 +38,7 @@ const MenuPage = () => {
 	if (error) return <p>Error: {error}</p>;
 
 	return (
-		<div className="h-screen bg-[#181818]">
+		<div className="h-screen bg-[#181818] p-4">
 			<div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
 				{menu.map((item) => (
 					<div
@@ -50,6 +52,15 @@ const MenuPage = () => {
 						<p className="mt-2 font-bold text-red-900">
 							${item.price}
 						</p>
+						<button
+							onClick={() => {
+								console.log({ ...item });
+								addItem({ ...item, quantity: 1 });
+							}}
+							className="mt-2 w-full rounded bg-green-600 px-4 py-2 text-white hover:bg-green-700"
+						>
+							Add to Cart
+						</button>
 					</div>
 				))}
 			</div>

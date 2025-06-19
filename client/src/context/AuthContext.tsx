@@ -1,18 +1,21 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { mergeAnonCart } from "../utils/cart.ts";
 
 interface AuthUser {
 	id: number;
 	username: string;
 }
 
-interface AuthContextType {
+export interface AuthContextType {
 	user: AuthUser | null;
 	loading: boolean;
 	setUser: (user: AuthUser | null) => void;
 	logout: () => void;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(
+	undefined,
+);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 	const [user, setUser] = useState<AuthUser | null>(null);
@@ -27,6 +30,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 				if (res.ok) {
 					const data = await res.json();
 					setUser(data);
+					mergeAnonCart(data.id);
 				}
 			} catch (err) {
 				if (process.env.NODE_ENV !== "production") {
@@ -56,10 +60,4 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 			{children}
 		</AuthContext.Provider>
 	);
-};
-
-export const useAuth = (): AuthContextType => {
-	const context = useContext(AuthContext);
-	if (!context) throw new Error("useAuth must be used within AuthProvider");
-	return context;
 };

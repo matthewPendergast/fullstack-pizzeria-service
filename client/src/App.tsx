@@ -3,6 +3,7 @@ import MenuPage from "./pages/menu/MenuPage.tsx";
 import Navbar from "./components/Navbar.tsx";
 import SignupPage from "./pages/auth/SignupPage.tsx";
 import LoginPage from "./pages/auth/LoginPage.tsx";
+import CartPage from "./pages/cart/CartPage.tsx";
 import "./App.css";
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
 				<Route path="/" element={<MenuPage />} />
 				<Route path="/signup" element={<SignupPage />} />
 				<Route path="/login" element={<LoginPage />} />
+				<Route path="/cart" element={<CartPage />} />
 			</Routes>
 		</>
 	);

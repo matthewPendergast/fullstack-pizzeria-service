@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext.tsx";
+import { useAuth } from "../context/useAuth.ts";
+import { mergeAnonCart } from "../utils/cart.ts";
 
 export const useAuthForm = (endpoint: string) => {
 	const [form, setForm] = useState({ username: "", email: "", password: "" });
@@ -33,6 +34,7 @@ export const useAuthForm = (endpoint: string) => {
 			if (!res.ok) throw new Error(data.error || "Request failed");
 
 			setUser(data);
+			mergeAnonCart(data.id);
 			setSuccessMessage("Success!");
 			setTimeout(() => navigate("/"), 1000);
 		} catch (err: any) {

@@ -31,10 +31,11 @@ A full-stack pizza ordering web app being built with React, Node, Express, and P
     - ✅ Backend: Signup/login API routes
     - ✅ Testing: Auth route tests
     - ✅ Frontend: Signup/login pages
-- ⬜ Cart functionality
+- 🔄 Cart functionality
+    - ✅ Local storage prototype
+    - ✅ Frontend: Interactive cart UI
     - ⬜ Backend: API routes (add/update/remove/view items)
     - ⬜ Testing: Unit & integration tests
-    - ⬜ Frontend: Interactive cart UI
 - ⬜ Checkout & order placement
     - ⬜ Backend: Checkout/order process
     - ⬜ Testing: Order route tests

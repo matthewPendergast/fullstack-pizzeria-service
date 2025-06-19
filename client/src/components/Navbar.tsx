@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useAuth } from "../context/AuthContext.tsx";
+import { useAuth } from "../context/useAuth.ts";
 
 const Navbar = () => {
 	const { user, logout } = useAuth();
@@ -9,9 +9,9 @@ const Navbar = () => {
 			{user && <p>Welcome, {user.username}</p>}
 			<div className="flex justify-center gap-8 py-2 text-xl">
 				<Link to="/">Menu</Link>
+				<Link to="/cart">Cart</Link>
 				{user ? (
 					<>
-						<Link to="/">Cart</Link>
 						<Link onClick={logout} to="/logout">
 							Logout
 						</Link>
