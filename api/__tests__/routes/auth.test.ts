@@ -8,6 +8,10 @@ const testUser = {
 	password: "testpass123",
 };
 
+beforeAll(async () => {
+	await pool.query("DELETE FROM users");
+});
+
 describe("POST /signup and /login", () => {
 	afterAll(async () => {
 		await pool.query("DELETE FROM users WHERE email = $1", [

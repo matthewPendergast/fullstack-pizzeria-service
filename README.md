@@ -31,16 +31,20 @@ A full-stack pizza ordering web app being built with React, Node, Express, and P
     - ✅ Backend: Signup/login API routes
     - ✅ Testing: Auth route tests
     - ✅ Frontend: Signup/login pages
+    - ✅ Testing: Signup/login page tests
 - 🔄 Cart functionality
     - ✅ Local storage prototype
     - ✅ Frontend: Interactive cart UI
-    - ⬜ Backend: API routes (add/update/remove/view items)
-    - ⬜ Testing: Unit & integration tests
+    - ✅ Backend: API routes
+    - ✅ Testing: Cart route tests
+    - ⬜ Frontend: Hook up UI to API
+    - ⬜ Testing: Cart page tests
 - ⬜ Checkout & order placement
     - ⬜ Backend: Checkout/order process
     - ⬜ Testing: Order route tests
     - ⬜ Frontend: Checkout & order confirmation UI
-- ⬜ UI/UX
+- ⬜ UI/UX MVP design
+- ⬜ Review security concerns
 - ⬜ Assess, refine, optimize, & polish
 - ⬜ Deployment
 
@@ -263,6 +267,207 @@ A full-stack pizza ordering web app being built with React, Node, Express, and P
 > {
 > 	"id": 1,
 > 	"username": "john_doe"
+> }
+> ```
+
+---
+
+</details>
+
+### Cart
+
+<details>
+	<summary>
+		<b>GET</b>
+		<code>/api/cart</code>
+		(Returns user's cart items)
+	</summary>
+
+#### Parameters
+
+> None
+
+#### Headers
+
+> | Name          | Value          | Required | Description                 |
+> | ------------- | -------------- | -------- | --------------------------- |
+> | Authorization | Bearer <token> | Yes      | JWT for protected endpoints |
+
+#### Example Response
+
+> ```json
+> [
+> 	{
+> 		"id": 1,
+> 		"user_id": 1,
+> 		"item_id": 1,
+> 		"name": "Cheese Pizza",
+> 		"price": "8.99",
+> 		"quantity": 1
+> 	},
+> 	{
+> 		"id": 2,
+> 		"user_id": 1,
+> 		"item_id": 3,
+> 		"name": "Breadsticks",
+> 		"price": "4.99",
+> 		"quantity": 1
+> 	}
+> ]
+> ```
+
+---
+
+</details>
+
+<details>
+	<summary>
+		<b>POST</b>
+		<code>/api/cart</code>
+		(Adds an item to cart or updates quantity if item already exists)
+	</summary>
+
+#### Parameters
+
+> None
+
+#### Headers
+
+> | Name          | Value            | Required | Description                 |
+> | ------------- | ---------------- | -------- | --------------------------- |
+> | Content-Type  | application/json | Yes      | Must be JSON formatted      |
+> | Authorization | Bearer <token>   | Yes      | JWT for protected endpoints |
+
+#### Response
+
+> | HTTP Code | Content-Type       | Response            |
+> | --------- | ------------------ | ------------------- |
+> | N/A       | `application/json` | Item added/updated. |
+
+#### Example Request
+
+> ```json
+> {
+> 	"item_id": 4,
+> 	"name": "Garden Salad",
+> 	"price": 5.99,
+> 	"quantity": 1
+> }
+> ```
+
+---
+
+</details>
+
+<details>
+	<summary>
+		<b>PUT</b>
+		<code>/api/cart/{item_id}</code>
+		(Updates the quantity of the item with {item_id})
+	</summary>
+
+#### Parameters
+
+> | Name    | Type     | Data Type | Description              |
+> | ------- | -------- | --------- | ------------------------ |
+> | item_id | required | integer   | ID of the item to update |
+
+#### Headers
+
+> | Name          | Value            | Required | Description                 |
+> | ------------- | ---------------- | -------- | --------------------------- |
+> | Content-Type  | application/json | Yes      | Must be JSON formatted      |
+> | Authorization | Bearer <token>   | Yes      | JWT for protected endpoints |
+
+#### Response
+
+> | HTTP Code | Content-Type       | Response          |
+> | --------- | ------------------ | ----------------- |
+> | N/A       | `application/json` | Quantity updated. |
+
+#### Example Request
+
+> ```json
+> {
+> 	"quantity": 2
+> }
+> ```
+
+---
+
+</details>
+
+<details>
+	<summary>
+		<b>DELETE</b>
+		<code>/api/cart/{item_id}</code>
+		(Deletes the item with {item_id})
+	</summary>
+
+#### Parameters
+
+> | Name    | Type     | Data Type | Description              |
+> | ------- | -------- | --------- | ------------------------ |
+> | item_id | required | integer   | ID of the item to delete |
+
+#### Headers
+
+> | Name          | Value          | Required | Description                 |
+> | ------------- | -------------- | -------- | --------------------------- |
+> | Authorization | Bearer <token> | Yes      | JWT for protected endpoints |
+
+#### Response
+
+> | HTTP Code | Content-Type       | Response      |
+> | --------- | ------------------ | ------------- |
+> | N/A       | `application/json` | Item deleted. |
+
+---
+
+</details>
+
+<details>
+	<summary>
+		<b>POST</b>
+		<code>/api/cart/merge</code>
+		(Merges local cart with server cart)
+	</summary>
+
+#### Parameters
+
+> None
+
+#### Headers
+
+> | Name          | Value            | Required | Description                 |
+> | ------------- | ---------------- | -------- | --------------------------- |
+> | Content-Type  | application/json | Yes      | Must be JSON formatted      |
+> | Authorization | Bearer <token>   | Yes      | JWT for protected endpoints |
+
+#### Response
+
+> | HTTP Code | Content-Type       | Response     |
+> | --------- | ------------------ | ------------ |
+> | N/A       | `application/json` | Cart merged. |
+
+#### Example Request
+
+> ```json
+> {
+> 	"cart": [
+> 		{
+> 			"item_id": 2,
+> 			"name": "Pepperoni Pizza",
+> 			"price": 9.99,
+> 			"quantity": 1
+> 		},
+> 		{
+> 			"item_id": 5,
+> 			"name": "Soda",
+> 			"price": 1.99,
+> 			"quantity": 2
+> 		}
+> 	]
 > }
 > ```
 
