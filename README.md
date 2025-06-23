@@ -1,6 +1,6 @@
 # Overview
 
-A full-stack pizza ordering web app being built with React, Node, Express, and PostgreSQL. This project will emulate a real pizza ordering website, and it is currently in active MVP development.
+This is a full-stack pizza ordering web app that is being built with React, Node, Express, and PostgreSQL. It will emulate a real pizzeria website, and it is currently in active development.
 
 ## Tech Stack
 
@@ -10,7 +10,7 @@ A full-stack pizza ordering web app being built with React, Node, Express, and P
 - **DevOps:** Docker
 - **Testing:** Jest
 
-## MVP Features (in progress)
+## Features (in progress)
 
 - View restaurant menu
 - User signup/login functionality
@@ -20,8 +20,6 @@ A full-stack pizza ordering web app being built with React, Node, Express, and P
 - Responsive UI inspired by real-world applications
 
 ## Roadmap
-
-### MVP Phase:
 
 - ✅ Menu functionality
     - ✅ Backend: API route for menu retrieval
@@ -33,17 +31,15 @@ A full-stack pizza ordering web app being built with React, Node, Express, and P
     - ✅ Frontend: Signup/login pages
     - ✅ Testing: Signup/login page tests
 - 🔄 Cart functionality
-    - ✅ Local storage prototype
-    - ✅ Frontend: Interactive cart UI
     - ✅ Backend: API routes
     - ✅ Testing: Cart route tests
-    - ⬜ Frontend: Hook up UI to API
+    - ✅ Frontend: Hook up UI to API
     - ⬜ Testing: Cart page tests
 - ⬜ Checkout & order placement
     - ⬜ Backend: Checkout/order process
     - ⬜ Testing: Order route tests
     - ⬜ Frontend: Checkout & order confirmation UI
-- ⬜ UI/UX MVP design
+- ⬜ UI/UX design
 - ⬜ Review security concerns
 - ⬜ Assess, refine, optimize, & polish
 - ⬜ Deployment

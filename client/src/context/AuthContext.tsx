@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { mergeAnonCart } from "../utils/cart.ts";
 
 interface AuthUser {

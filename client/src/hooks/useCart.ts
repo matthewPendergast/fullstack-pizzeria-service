@@ -1,87 +1,33 @@
-import { useEffect, useState } from "react";
 import { useAuth } from "../context/useAuth.ts";
+import { useLocalCart } from "./useLocalCart.ts";
+import { useServerCart } from "./useServerCart.ts";
+import { CartItem } from "./useLocalCart.ts";
 
-export interface CartItem {
-	id: number;
-	name: string;
-	price: number;
-	quantity: number;
+interface CartHook {
+	cart: CartItem[];
+	addItem: (item: CartItem) => void;
+	updateQuantity: (id: number, qty: number) => void;
+	removeItem: (id: number) => void;
+	clearCart: () => void;
+	loading?: boolean;
 }
 
-type Cart = CartItem[];
+export const useCart = (): CartHook => {
+	const { user, loading } = useAuth();
 
-const getCartKey = (userId: number | null) =>
-	userId ? `cart-user-${userId}` : "cart-anon";
+	const local = useLocalCart();
+	const server = useServerCart();
 
-export const useCart = () => {
-	const { user } = useAuth();
-	const [cart, setCart] = useState<Cart>([]);
-	const [initialized, setInitialized] = useState(false);
+	if (loading) {
+		return {
+			cart: [],
+			addItem: () => {},
+			updateQuantity: () => {},
+			removeItem: () => {},
+			clearCart: () => {},
+			loading: true,
+		};
+	}
 
-	const cartKey = getCartKey(user?.id ?? null);
-
-	// Load cart from localStorage
-	useEffect(() => {
-		const stored = localStorage.getItem(cartKey);
-		if (stored) {
-			const parsed = JSON.parse(stored) as CartItem[];
-
-			const normalized = parsed.map((item) => ({
-				...item,
-				price: Number(item.price),
-				quantity: Number(item.quantity),
-			}));
-
-			setCart(normalized);
-		} else {
-			setCart([]);
-		}
-		setInitialized(true);
-	}, [cartKey]);
-
-	// Save to localStorage only after initial load
-	useEffect(() => {
-		if (initialized) {
-			localStorage.setItem(cartKey, JSON.stringify(cart));
-		}
-	}, [cart, cartKey, initialized]);
-
-	const addItem = (item: CartItem) => {
-		setCart((prev) => {
-			const existing = prev.find((i) => i.id === item.id);
-			if (existing) {
-				return prev.map((i) =>
-					i.id === item.id
-						? { ...i, quantity: i.quantity + item.quantity }
-						: i,
-				);
-			}
-			return [...prev, item];
-		});
-	};
-
-	const removeItem = (itemId: number) => {
-		setCart((prev) => prev.filter((item) => item.id !== itemId));
-	};
-
-	const updateQuantity = (itemId: number, quantity: number) => {
-		setCart((prev) =>
-			prev.map((item) =>
-				item.id === itemId ? { ...item, quantity } : item,
-			),
-		);
-	};
-
-	const clearCart = () => {
-		setCart([]);
-		localStorage.removeItem(cartKey);
-	};
-
-	return {
-		cart,
-		addItem,
-		removeItem,
-		updateQuantity,
-		clearCart,
-	};
+	return user ? server : local;
 };

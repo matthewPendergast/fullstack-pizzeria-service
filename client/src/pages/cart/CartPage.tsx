@@ -1,9 +1,10 @@
 import { useCart } from "../../hooks/useCart.ts";
+import { CartItem } from "../../hooks/useLocalCart.ts";
 
 const CartPage = () => {
 	const { cart, updateQuantity, removeItem, clearCart } = useCart();
 
-	const total = cart
+	const total = (cart as CartItem[])
 		.reduce((sum, item) => sum + item.price * item.quantity, 0)
 		.toFixed(2);
 
