@@ -10,6 +10,12 @@ export const getCart = async (req: Request, res: Response) => {
 	res.json(rows);
 };
 
+export const clearCart = async (req: Request, res: Response) => {
+	const userId = req.user?.id;
+	await pool.query("DELETE FROM cart_items WHERE user_id = $1", [userId]);
+	res.json({ message: "Cart cleared." });
+};
+
 export const addItemToCart = async (req: Request, res: Response) => {
 	const userId = req.user?.id;
 	const { item_id, name, price, quantity } = req.body;
@@ -48,9 +54,17 @@ export const deleteItemFromCart = async (req: Request, res: Response) => {
 
 export const mergeCart = async (req: Request, res: Response) => {
 	const userId = req.user?.id;
-	const localCart = req.body.cart;
+	const localCart = req.body;
+
+	if (!Array.isArray(localCart)) {
+		res.status(400).json({ error: "Invalid cart format" });
+		return;
+	}
 
 	for (const item of localCart) {
+		const itemId = item.id ?? item.item_id;
+		if (!itemId) continue;
+
 		await pool.query(
 			`
 			INSERT INTO cart_items (user_id, item_id, name, price, quantity)
@@ -58,7 +72,7 @@ export const mergeCart = async (req: Request, res: Response) => {
 			ON CONFLICT (user_id, item_id)
 			DO UPDATE SET quantity = cart_items.quantity + EXCLUDED.quantity
 			`,
-			[userId, item.item_id, item.name, item.price, item.quantity],
+			[userId, itemId, item.name, item.price, item.quantity],
 		);
 	}
 
