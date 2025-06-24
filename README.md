@@ -33,7 +33,7 @@ This is a full-stack pizza ordering web app that is being built with React, Node
 - 🔄 Cart functionality
     - ✅ Backend: API routes
     - ✅ Testing: Cart route tests
-    - ✅ Frontend: Hook up UI to API
+    - ✅ Frontend: Cart page UI
     - ⬜ Testing: Cart page tests
 - ⬜ Checkout & order placement
     - ⬜ Backend: Checkout/order process
@@ -311,6 +311,33 @@ This is a full-stack pizza ordering web app that is being built with React, Node
 > 	}
 > ]
 > ```
+
+---
+
+</details>
+
+<details>
+	<summary>
+		<b>DELETE</b>
+		<code>/api/cart</code>
+		(Deletes all items in the user's cart)
+	</summary>
+
+#### Parameters
+
+> None
+
+#### Headers
+
+> | Name          | Value          | Required | Description                 |
+> | ------------- | -------------- | -------- | --------------------------- |
+> | Authorization | Bearer <token> | Yes      | JWT for protected endpoints |
+
+#### Response
+
+> | HTTP Code | Content-Type       | Response      |
+> | --------- | ------------------ | ------------- |
+> | N/A       | `application/json` | Cart cleared. |
 
 ---
 
