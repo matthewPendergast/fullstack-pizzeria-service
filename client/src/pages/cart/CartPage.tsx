@@ -1,12 +1,42 @@
+import { useNavigate } from "react-router-dom";
 import { useCart } from "../../hooks/useCart.ts";
 import { CartItem } from "../../hooks/useLocalCart.ts";
+import { useAuth } from "../../context/useAuth.ts";
 
 const CartPage = () => {
 	const { cart, updateQuantity, removeItem, clearCart } = useCart();
+	const { user } = useAuth();
+	const navigate = useNavigate();
 
 	const total = (cart as CartItem[])
 		.reduce((sum, item) => sum + item.price * item.quantity, 0)
 		.toFixed(2);
+
+	const handleCheckout = async () => {
+		if (!user) {
+			navigate("/login");
+			return;
+		}
+		try {
+			const res = await fetch(`${import.meta.env.VITE_API_URL}/order`, {
+				method: "POST",
+				credentials: "include",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+
+			const data = await res.json();
+
+			if (!res.ok) throw new Error(data.error || "Checkout failed");
+
+			navigate("/order-success", { state: { orderId: data.orderId } });
+			clearCart();
+		} catch (err: any) {
+			console.error("Checkout error:", err);
+			alert(`Checkout failed: ${err.message}`);
+		}
+	};
 
 	return (
 		<div className="mx-auto max-w-3xl p-4">
@@ -70,7 +100,10 @@ const CartPage = () => {
 							>
 								Clear Cart
 							</button>
-							<button className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700">
+							<button
+								onClick={handleCheckout}
+								className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+							>
 								Proceed to Checkout
 							</button>
 						</div>
