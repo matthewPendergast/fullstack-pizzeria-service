@@ -35,9 +35,9 @@ This is a full-stack pizza ordering web app that is being built with React, Node
     - ✅ Testing: Cart route tests
     - ✅ Frontend: Cart page UI
     - ✅ Testing: Cart page tests
-- ⬜ Checkout & order placement
-    - ⬜ Backend: Checkout/order process
-    - ⬜ Testing: Order route tests
+- 🔄 Checkout & order placement
+    - ✅ Backend: Checkout/order process
+    - ✅ Testing: Order route tests
     - ⬜ Frontend: Checkout & order confirmation UI
 - ⬜ UI/UX design
 - ⬜ Review security concerns

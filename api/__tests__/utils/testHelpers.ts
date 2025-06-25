@@ -1,19 +1,18 @@
 import request from "supertest";
 import app from "../../src/app";
 
-let userCounter = 1;
+export const createTestUser = async () => {
+	const uniqueSuffix = Math.floor(Math.random() * 100000);
+	const username = `testuser_${uniqueSuffix}`;
+	const email = `test_${uniqueSuffix}@example.com`;
+	const password = "testpass123";
 
-export async function createTestUser() {
-	const user = {
-		username: `testuser${userCounter}`,
-		email: `test${userCounter}@email.com`,
-		password: "password123",
-	};
-	userCounter++;
+	await request(app)
+		.post("/api/auth/signup")
+		.send({ username, email, password });
 
-	await request(app).post("/api/auth/signup").send(user);
-	return user;
-}
+	return { username, email, password };
+};
 
 export async function loginTestUser(user: { email: string; password: string }) {
 	const res = await request(app).post("/api/auth/login").send(user);

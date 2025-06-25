@@ -1,5 +1,7 @@
 -- DEVELOPMENT/TESTING ONLY
 
+DROP TABLE IF EXISTS order_items;
+DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS cart_items;
 DROP TABLE IF EXISTS menu_items;
 DROP TABLE IF EXISTS users;
@@ -30,4 +32,20 @@ CREATE TABLE cart_items (
 	price NUMERIC(10, 2) NOT NULL,
 	quantity INTEGER NOT NULL DEFAULT 1,
 	UNIQUE (user_id, item_id)
+);
+
+CREATE TABLE orders (
+	id SERIAL PRIMARY KEY,
+	user_id INTEGER REFERENCES users(id),
+	total NUMERIC(10, 2) NOT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE order_items (
+	id SERIAL PRIMARY KEY,
+	order_id INTEGER REFERENCES orders(id) ON DELETE CASCADE,
+	item_id INTEGER,
+	name TEXT,
+	price NUMERIC(10, 2),
+	quantity INTEGER
 );
