@@ -6,10 +6,24 @@ info:
         API documentation for the Pizza Store application, including authentication,
         menu retrieval, and health checks.
 
+tags:
+    - name: Menu
+      description: Menu-related endpoints
+    - name: Authentication
+      description: User signup, login, logout, and session info
+    - name: Cart
+      description: Cart operations for the user
+    - name: Order
+      description: Place an order for items in the cart
+    - name: Health
+      description: Server health and uptime info
+
 paths:
     /api/menu:
         get:
             summary: Returns a list of all available menu items
+            tags:
+                - Menu
             responses:
                 "200":
                     description: Array of menu items
@@ -25,6 +39,8 @@ paths:
     /api/auth/signup:
         post:
             summary: Creates a new user account
+            tags:
+                - Authentication
             requestBody:
                 required: true
                 content:
@@ -46,6 +62,8 @@ paths:
     /api/auth/login:
         post:
             summary: Logs in an existing user
+            tags:
+                - Authentication
             requestBody:
                 required: true
                 content:
@@ -69,6 +87,8 @@ paths:
     /api/auth/logout:
         post:
             summary: Logs out the current user
+            tags:
+                - Authentication
             responses:
                 "200":
                     description: Logged out
@@ -80,6 +100,8 @@ paths:
     /api/auth/me:
         get:
             summary: Returns basic authenticated user info
+            tags:
+                - Authentication
             responses:
                 "200":
                     description: Authenticated user info
@@ -90,9 +112,154 @@ paths:
                 "401":
                     description: Unauthorized
 
+    /api/cart:
+        get:
+            summary: Returns user's cart items
+            tags:
+                - Cart
+            security:
+                - bearerAuth: []
+            responses:
+                "200":
+                    description: List of cart items
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/CartItem"
+                "401":
+                    description: Unauthorized
+        post:
+            summary: Adds an item to cart or updates quantity if item already exists
+            tags:
+                - Cart
+            security:
+                - bearerAuth: []
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/CartItemInput"
+            responses:
+                "200":
+                    description: Item added/updated
+                "401":
+                    description: Unauthorized
+        delete:
+            summary: Deletes all items in the user's cart
+            tags:
+                - Cart
+            security:
+                - bearerAuth: []
+            responses:
+                "200":
+                    description: Cart cleared
+                "401":
+                    description: Unauthorized
+
+    /api/cart/{item_id}:
+        put:
+            summary: Updates the quantity of the item with the given ID
+            tags:
+                - Cart
+            security:
+                - bearerAuth: []
+            parameters:
+                - in: path
+                  name: item_id
+                  required: true
+                  schema:
+                      type: integer
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                quantity:
+                                    type: integer
+            responses:
+                "200":
+                    description: Quantity updated
+                "401":
+                    description: Unauthorized
+        delete:
+            summary: Deletes the item with the given ID
+            tags:
+                - Cart
+            security:
+                - bearerAuth: []
+            parameters:
+                - in: path
+                  name: item_id
+                  required: true
+                  schema:
+                      type: integer
+            responses:
+                "200":
+                    description: Item deleted
+                "401":
+                    description: Unauthorized
+
+    /api/cart/merge:
+        post:
+            summary: Merges local cart with server cart
+            tags:
+                - Cart
+            security:
+                - bearerAuth: []
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                cart:
+                                    type: array
+                                    items:
+                                        $ref: "#/components/schemas/CartItemInput"
+            responses:
+                "200":
+                    description: Cart merged
+                "401":
+                    description: Unauthorized
+
+    /api/order:
+        post:
+            summary: Places an order for the current user's cart items
+            tags:
+                - Order
+            security:
+                - bearerAuth: []
+            responses:
+                "201":
+                    description: Order placed successfully
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OrderResponse"
+                "400":
+                    description: Cart is empty
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "500":
+                    description: Order placement failed
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+
     /api/health:
         get:
             summary: Returns basic server health info
+            tags:
+                - Health
             responses:
                 "200":
                     description: Server status
@@ -153,6 +320,52 @@ components:
                 username:
                     type: string
 
+        CartItem:
+            type: object
+            properties:
+                id:
+                    type: integer
+                user_id:
+                    type: integer
+                item_id:
+                    type: integer
+                name:
+                    type: string
+                price:
+                    type: string
+                quantity:
+                    type: integer
+
+        CartItemInput:
+            type: object
+            required: [item_id, name, price, quantity]
+            properties:
+                item_id:
+                    type: integer
+                name:
+                    type: string
+                price:
+                    type: number
+                quantity:
+                    type: integer
+
+        OrderResponse:
+            type: object
+            properties:
+                message:
+                    type: string
+                    example: Order placed successfully.
+                orderId:
+                    type: integer
+                    example: 100
+
+        ErrorResponse:
+            type: object
+            properties:
+                error:
+                    type: string
+                    example: Order placement failed.
+
         HealthResponse:
             type: object
             properties:
@@ -162,3 +375,9 @@ components:
                     type: integer
                 uptime:
                     type: number
+
+    securitySchemes:
+        bearerAuth:
+            type: http
+            scheme: bearer
+            bearerFormat: JWT

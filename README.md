@@ -1,6 +1,6 @@
-# Overview
+# Fullstack Pizzeria Service
 
-This is a full-stack pizza ordering web app that is being built with React, Node, Express, and PostgreSQL. It will emulate a real pizzeria website, and it is currently in active development.
+This is a pizza ordering web app project that is being built with React, Node, Express, and PostgreSQL for the purpose of learning fullstack web development skills. It will emulate a real pizzeria website, and it is currently being actively worked on.
 
 ## Tech Stack
 
@@ -10,7 +10,7 @@ This is a full-stack pizza ordering web app that is being built with React, Node
 - **DevOps:** Docker
 - **Testing:** Jest
 
-## Features (in progress)
+## Features
 
 - View restaurant menu
 - User signup/login functionality
@@ -499,6 +499,47 @@ This is a full-stack pizza ordering web app that is being built with React, Node
 
 </details>
 
+### Order
+
+<details>
+	<summary>
+		<b>POST</b>
+		<code>/api/order</code>
+		(Places an order for the current user's cart items)
+	</summary>
+
+#### Parameters
+
+> None
+
+#### Headers
+
+> | Name          | Value            | Required | Description                 |
+> | ------------- | ---------------- | -------- | --------------------------- |
+> | Content-Type  | application/json | Yes      | Must be JSON formatted      |
+> | Authorization | Bearer <token>   | Yes      | JWT for protected endpoints |
+
+#### Response
+
+> | HTTP Code | Content-Type       | Response                   |
+> | --------- | ------------------ | -------------------------- |
+> | `201`     | `application/json` | Order placed with order ID |
+> | `400`     | `application/json` | Cart is empty              |
+> | `500`     | `application/json` | Order placement failed     |
+
+#### Example Response
+
+> ```json
+> {
+> 	"message": "Order placed successfully.",
+> 	"orderId": 100
+> }
+> ```
+
+---
+
+</details>
+
 ### Health
 
 <details>
@@ -541,6 +582,7 @@ This is a full-stack pizza ordering web app that is being built with React, Node
 
 > ```bash
 > pizza-store/
+> │
 > ├── api/
 > │   ├── __tests__/
 > │   ├── db/init/
@@ -563,6 +605,7 @@ This is a full-stack pizza ordering web app that is being built with React, Node
 > │   │   ├── context/
 > │   │   ├── hooks/
 > │   │   ├── pages/
+> │   │   ├── utils/
 > │   │   ├── App.tsx
 > │   │   └── main.tsx
 > │   └── index.html
